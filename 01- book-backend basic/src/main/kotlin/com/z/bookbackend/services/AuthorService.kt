@@ -18,7 +18,7 @@ class AuthorService(private val authorDAO: AuthorDAO, private val bookDAO: BookD
 
     @Throws(Exception::class)
     override fun update(obj: Author): Author {
-        return if(authorDAO.existsById(obj.id)){//check if author exists because the save method will insert a record if does not exists
+        return if(authorDAO.existsById(obj.id.toString()){//check if author exists because the save method will insert a record if does not exists
             authorDAO.save(obj).apply { //update author
                 obj.id?.let { //if does has Id then
                     bookDAO.saveAll(bookDAO.findByAuthorId(it).map { it.also { it.author=this } })//update all his books
